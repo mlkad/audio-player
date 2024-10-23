@@ -57,24 +57,23 @@ const setMusic = (i) => {
   artistName.textContent = piece.artist;
   cover.src = piece.cover;
 
-  setTimeout(() => {
-    progress.max = audio.duration;
-    duration.innerHTML = formatTime(audio.duration);
-  }, 300);
+  audio.addEventListener('loadedmetadata', () => {
+    if (!isNaN(audio.duration)) {
+      progress.max = audio.duration;
+      duration.textContent = formatTime(audio.duration);
+    }
+  });
 }
+
 setMusic(0);
 
 setInterval(() => {
-  if (!isNaN(audio.duration)) {
-    progress.value = audio.currentTime;
-    currentTime.textContent = formatTime(audio.currentTime);
-
-    if (Math.floor(audio.currentTime) === Math.floor(progress.max)) {
-      forwardButton.click();
-    }
+  progress.value = audio.currentTime;
+  currentTime.textContent = formatTime(audio.currentTime);
+  if (Math.floor(audio.currentTime) == Math.floor(progress.max)) {
+    forwardButton.click()
   }
 }, 500);
-
 
 const playMusic = () => {
   audio.play();
