@@ -65,12 +65,16 @@ const setMusic = (i) => {
 setMusic(0);
 
 setInterval(() => {
-  progress.value = audio.currentTime;
-  currentTime.textContent = formatTime(audio.currentTime);
-  if (Math.floor(audio.currentTime) == Math.floor(progress.max)) {
-    forwardButton.click()
+  if (!isNaN(audio.duration)) {
+    progress.value = audio.currentTime;
+    currentTime.textContent = formatTime(audio.currentTime);
+
+    if (Math.floor(audio.currentTime) === Math.floor(progress.max)) {
+      forwardButton.click();
+    }
   }
 }, 500);
+
 
 const playMusic = () => {
   audio.play();
